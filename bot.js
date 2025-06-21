@@ -16,7 +16,7 @@ function launchBot() {
   console.log("🔁 Attempting to connect...");
 
   bot = mineflayer.createBot({
-    username: "minecraft_bot",
+    username: "Bot",
     host: "KARBAN2923-JmVS.aternos.me",
     port: 51344,
     version: "1.19.4",
