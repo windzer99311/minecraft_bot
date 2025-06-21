@@ -1,3 +1,16 @@
-"scripts": {
-  "start": "node bot.js"
+{
+  "name": "minecraft-bot-render",
+  "version": "1.0.0",
+  "description": "A Mineflayer bot with Express web server for Render",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mineflayer": "^4.12.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
