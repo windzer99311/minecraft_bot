@@ -17,8 +17,8 @@ function launchBot() {
 
   bot = mineflayer.createBot({
     username: "non",
-    host: "localhost",
-    port: 3000,
+    host: "KARBAN2923-JmVS.aternos.me",
+    port: 51344,
     version: "1.19.4",
     hideErrors: false
   });
