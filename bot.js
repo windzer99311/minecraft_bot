@@ -1,18 +1,24 @@
 const mineflayer = require('mineflayer');
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 let bot = null;
 let botLaunched = false;
 let reconnectInterval = null;
+let botStatus = "starting...";
+
+// ---- MINEFLAYER BOT LOGIC ----
 
 function launchBot() {
-  if (botLaunched) return; // already trying or connected
+  if (botLaunched) return;
 
-  console.log("🔁 Attempting to connect to server...");
+  console.log("🔁 Attempting to connect...");
 
   bot = mineflayer.createBot({
-    username: "unnon",
-    host: "KARBAN2923-JmVS.aternos.me",   // <- change this to your server
-    port: 51344,          // <- change this to your port
+    username: "non",
+    host: "localhost",
+    port: 3000,
     version: "1.19.4",
     hideErrors: false
   });
@@ -20,19 +26,22 @@ function launchBot() {
   botLaunched = true;
 
   bot.on("login", () => {
-    console.log("🟢 Connected to Minecraft server!");
-    clearInterval(reconnectInterval); // stop reconnect attempts
+    botStatus = "🟢 Connected";
+    console.log(botStatus);
+    clearInterval(reconnectInterval);
     reconnectInterval = null;
   });
 
   bot.on("end", (reason) => {
-    console.log("🔴 Bot disconnected:", reason);
+    botStatus = `🔴 Disconnected: ${reason}`;
+    console.log(botStatus);
     botLaunched = false;
     tryReconnect();
   });
 
   bot.on("error", (err) => {
-    console.error("❌ Bot error:", err.message);
+    botStatus = `❌ Error: ${err.message}`;
+    console.log(botStatus);
     botLaunched = false;
     tryReconnect();
   });
@@ -41,12 +50,19 @@ function launchBot() {
 function tryReconnect() {
   if (!reconnectInterval) {
     reconnectInterval = setInterval(() => {
-      if (!botLaunched) {
-        console.log("🔁 Retrying to connect...");
-        launchBot();
-      }
-    }, 5000); // retry every 5 seconds
+      if (!botLaunched) launchBot();
+    }, 5000);
   }
 }
 
-launchBot(); // start immediately
+launchBot();
+
+// ---- EXPRESS SERVER ----
+
+app.get('/', (req, res) => {
+  res.send(`<h1>Minecraft Bot Status</h1><p>${botStatus}</p>`);
+});
+
+app.listen(PORT, () => {
+  console.log(`🌐 Web server running on http://localhost:${PORT}`);
+});
