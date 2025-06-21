@@ -10,7 +10,7 @@ function launchBot() {
   console.log("🔁 Attempting to connect to server...");
 
   bot = mineflayer.createBot({
-    username: "minecraft_bot",
+    username: "minecaft_bot",
     host: "KARBAN2923-JmVS.aternos.me",   // <- change this to your server
     port: 51344,          // <- change this to your port
     version: "1.19.4",
@@ -24,12 +24,12 @@ function launchBot() {
     clearInterval(reconnectInterval); // stop reconnect attempts
     reconnectInterval = null;
   });
-  
+
   bot.on("spawn", () => {
   const pos = bot.entity.position;
   bot.chat(`Bot spawned at: ${pos}`);
   });
-  
+
   bot.on("chat", async (sender, message) => {
   if (!sender || sender === bot.username) return;
 
@@ -64,7 +64,6 @@ function launchBot() {
   }
   });
 
-
   bot.on("chat", async (sender, message) => {
   if (!sender || sender === bot.username) return;
 
@@ -86,7 +85,16 @@ function launchBot() {
       bot.chat("⚠️ Can't sleep: " + err.message);
     }
   }
-  
+  });
+  bot.on("wake", () => {
+  bot.chat("☀️ Woke up!");
+  });
+
+
+
+
+
+
   bot.on("end", (reason) => {
     console.log("🔴 Bot disconnected:", reason);
     botLaunched = false;
