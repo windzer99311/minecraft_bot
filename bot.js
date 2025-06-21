@@ -11,8 +11,8 @@ function launchBot() {
 
   bot = mineflayer.createBot({
     username: "minecraft_bot",
-    host: "localhost",   // <- change this to your server
-    port: 3000,          // <- change this to your port
+    host: "KARBAN2923-JmVS.aternos.me",   // <- change this to your server
+    port: 51344,          // <- change this to your port
     version: "1.19.4",
     hideErrors: false
   });
