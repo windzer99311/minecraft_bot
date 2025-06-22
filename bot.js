@@ -70,6 +70,17 @@ function tryReconnect() {
 
 launchBot();
 
+// ---- SILENT DISCONNECT WATCHDOG ----
+
+setInterval(() => {
+  if (bot && botLaunched && bot._client?.ended) {
+    console.log("⚠️ Silent bot end detected, restarting...");
+    botStatus = "🔴 Bot silently disconnected. Reconnecting...";
+    botLaunched = false;
+    tryReconnect();
+  }
+}, 10000); // every 10 seconds
+
 // ---- EXPRESS GUI ----
 
 app.get('/', (req, res) => {
@@ -121,7 +132,7 @@ app.get('/', (req, res) => {
         <div class="card">
           <h1>🛠 Minecraft Bot Status</h1>
           <div class="status">${botStatus}</div>
-          <small>Auto-updated when bot status changes</small>
+          <small>Auto-recovers from disconnects, including silent ones</small>
         </div>
       </body>
     </html>
