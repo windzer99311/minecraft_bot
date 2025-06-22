@@ -17,7 +17,7 @@ function launchBot() {
   botStatus = "🔁 Connecting to Minecraft server...";
 
   bot = mineflayer.createBot({
-    username: "minecraft_bot",
+    username: "ogt_bot",
     host: "KARBAN2923-JmVS.aternos.me", // Your server address
     port: 51344,                        // Your server port
     version: "1.19.4",
