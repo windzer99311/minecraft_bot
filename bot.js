@@ -40,8 +40,8 @@ app.listen(guiPort, () => {
 // === Bot Creation ===
 function createBot() {
   bot = mineflayer.createBot({
-    host: 'localhost',
-    port: 3000,
+    host: 'KARBAN2923-JmVS.aternos.me',
+    port: 51344,
     username: 'WanderBot'
   })
 
