@@ -42,7 +42,7 @@ function createBot() {
   bot = mineflayer.createBot({
     host: 'KARBAN2923-JmVS.aternos.me',
     port: 51344,
-    username: 'WanderBo'
+    username: 'WanderBot'
   })
 
   function isWithinBounds(pos) {
