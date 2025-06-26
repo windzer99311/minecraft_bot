@@ -1,18 +1,19 @@
 const mineflayer = require('mineflayer')
 const Vec3 = require('vec3')
 const express = require('express')
-
-let bot
-let center = null
 const radius = 9
 let isSleeping = false
 let walkInterval = null
 let botStatus = '🔄 Starting...'
-
+let a = 0;
+let new_op = '';
+let old_op = '';
+let bot
+let center = null
+let game_bot='WanderBot'
 // === Express GUI Server ===
 const app = express()
 const guiPort = 3001
-
 app.get('/', (req, res) => {
   res.send(`
     <html>
@@ -37,12 +38,59 @@ app.listen(guiPort, () => {
   console.log(`🌐 GUI running at http://localhost:${guiPort}`)
 })
 
+
+function bot_name() {
+     a += 1;
+     b= a-1;
+     new_op = 'bot_' + a;
+     old_op = 'bot_' + b;
+     console.log(new_op)
+     console.log(old_op)
+    }
+function bot_2(){
+    bot = mineflayer.createBot({
+    host: 'KARBAN2923-JmVS.aternos.me',
+    port: 51344,
+    username: `${old_op}`
+    })
+
+   bot.once('spawn', () => {
+   console.log(`connected ${new_op} as operator!`)
+    setTimeout(() => {
+    console.log('waiting!');
+    }, 3000); // 3 seconds
+   bot.chat(`/op ${new_op}`)
+   console.log("New operator join the game!")
+   setTimeout(() => {
+   console.log('waiting!');
+    }, 3000); // 3 seconds
+    bot.chat(`/pardon ${game_bot}`)
+    console.log("Unban Bot successfully!!")
+   setTimeout(() => {
+    console.log('waiting!');
+    }, 3000); // 3 seconds
+   bot.chat(`/deop ${old_op}`)
+   console.log("Old operator removed!");
+   bot.chat('Hello Everyone,I Unban Our Bot!!')
+   setTimeout(() => {
+    console.log('Done!!');
+    }, 2000);
+   bot.chat('My Work is Done,bye.Have a Nice Day!!')
+   bot.quit("Goodbye!")
+  })
+
+  bot.on('end', () => {
+  console.log(`former Operator ${old_op} left the game!`)
+  createBot()
+  })
+  }
+
 // === Bot Creation ===
 function createBot() {
   bot = mineflayer.createBot({
     host: 'KARBAN2923-JmVS.aternos.me',
     port: 51344,
-    username: 'Wanderbot'
+    username: `${game_bot}`
   })
 
   function isWithinBounds(pos) {
@@ -125,9 +173,9 @@ function createBot() {
 
   bot.once('spawn', () => {
     center = bot.entity.position.clone()
-    bot.chat('🧭 Spawned. Walking within 9-block square.')
     botStatus = '🟢 Connected and walking'
     console.log('🟢 Connected and walking')
+    bot.chat('Thanks Server Guardians for reviving me!!')
     startRandomWalk()
   })
 
@@ -135,6 +183,7 @@ function createBot() {
     stopCurrentWalk()
     center = bot.entity.position.clone()
     bot.chat('📍 Teleported! New center set.')
+    bot.chat('/deop Wanderbot')
     setTimeout(() => {
       if (!isSleeping) startRandomWalk()
     }, 500)
@@ -161,11 +210,16 @@ function createBot() {
         if (!entity.mobType) return false
         const hostileMobs = ['Zombie', 'Skeleton', 'Creeper', 'Spider', 'Husk', 'Drowned']
         return hostileMobs.includes(entity.mobType) &&
-              entity.position.distanceTo(bot.entity.position) < 8
+               entity.position.distanceTo(bot.entity.position) < 8
       })
 
       if (dangerNearby) {
         bot.chat('⚠️ Cannot sleep, hostile mob nearby!')
+        return
+      }
+
+      if (bot.time.isDay) {
+        bot.chat('☀️ It is daytime — can’t sleep now.')
         return
       }
 
@@ -184,14 +238,22 @@ function createBot() {
         }
 
         bot.lookAt(bed.position)
-        bot.sleep(bed, err => {
-          if (err) {
-            bot.chat('❌ Could not sleep: ' + err.message)
-            isSleeping = false
-            botStatus = '⚠️ Sleep failed, resuming walk'
-            startRandomWalk()
-          }
-        })
+
+        try {
+          bot.sleep(bed, (err) => {
+            if (err) {
+              bot.chat('❌ Could not sleep: ' + err.message)
+              isSleeping = false
+              botStatus = '⚠️ Sleep failed, resuming walk'
+              startRandomWalk()
+            }
+          })
+        } catch (err) {
+          bot.chat('❌ Sleep error: ' + err.message)
+          isSleeping = false
+          botStatus = '⚠️ Sleep error, resuming walk'
+          startRandomWalk()
+        }
       })
     }
   })
@@ -209,7 +271,7 @@ function createBot() {
   })
 
   bot.on('error', err => {
-    console.log('❌ Error')
+    console.log('❌ Error', err)
     botStatus = '❌ Error'
   })
 
@@ -219,8 +281,8 @@ function createBot() {
     if (walkInterval) clearInterval(walkInterval)
     walkInterval = null
     isSleeping = false
-    setTimeout(createBot, 5000)
+    setTimeout(bot_name, 2000)
+    setTimeout(bot_2, 2000)
   })
 }
-
 createBot()
