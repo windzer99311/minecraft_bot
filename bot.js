@@ -44,7 +44,6 @@ function bot_2(){
     })
 
    bot.once('spawn', () => {
-   console.log(`connected ${new_op} as operator!`)
    setTimeout(() => {
    console.log('waiting!');
     }, 3000); // 3 seconds
