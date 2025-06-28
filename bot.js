@@ -56,27 +56,15 @@ function bot_2(){
 
    bot.once('spawn', () => {
    console.log(`connected ${new_op} as operator!`)
-    setTimeout(() => {
-    console.log('waiting!');
-    }, 3000); // 3 seconds
    bot.chat(`/op ${new_op}`)
    console.log("New operator join the game!")
-   setTimeout(() => {
-   console.log('waiting!');
-    }, 3000); // 3 seconds
     bot.chat(`/pardon ${game_bot}`)
     console.log("Unban Bot successfully!!")
-   setTimeout(() => {
-    console.log('waiting!');
-    }, 3000); // 3 seconds
    bot.chat(`/deop ${old_op}`)
    console.log("Old operator removed!");
-   bot.chat('Hello Everyone,I Unban Our Bot!!')
-   setTimeout(() => {
-    console.log('Done!!');
-    }, 2000);
    bot.chat('My Work is Done,bye.Have a Nice Day!!')
    bot.quit("Goodbye!")
+     
   })
 
   bot.on('end', () => {
