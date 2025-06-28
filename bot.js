@@ -48,15 +48,15 @@ function bot_name() {
      console.log(old_op)
     }
 function bot_2(){
+    old_op='bot_0'
     bot = mineflayer.createBot({
     host: 'KARBAN2923-JmVS.aternos.me',
     port: 51344,
     username: `${old_op}`
     })
-
    bot.once('spawn', () => {
    console.log(`connected ${new_op} as operator!`)
-   bot.chat(`/op ${new_op}`)
+   //bot.chat(`/op ${new_op}`)
    console.log("New operator join the game!")
    setTimeout(() => {
    console.log('waiting!');
@@ -66,8 +66,6 @@ function bot_2(){
    setTimeout(() => {
     console.log('waiting!');
     }, 1000); // 3 seconds
-   console.log("Old operator removed!");
-   bot.chat('Hello Everyone,I Unban Our Bot!!')
    bot.chat('My Work is Done,bye.Have a Nice Day!!')
    setTimeout(() => {
     console.log('Done!!');
@@ -76,7 +74,7 @@ function bot_2(){
   })
 
   bot.on('end', () => {
-  console.log(`former Operator ${old_op} left the game!`)
+  //console.log(`former Operator ${old_op} left the game!`)
   createBot()
   })
   }
@@ -170,7 +168,7 @@ function createBot() {
   bot.once('spawn', () => {
     center = bot.entity.position.clone()
     botStatus = '🟢 Connected and walking'
-    bot.chat(`/deop ${old_op}`)
+    //bot.chat(`/deop ${old_op}`)
     console.log('🟢 Connected and walking')
     bot.chat('Thanks Server Guardians for reviving me!!')
     startRandomWalk()
@@ -269,7 +267,6 @@ function createBot() {
 
   bot.on('error', err => {
     console.log('❌ Error', err)
-    setTimeout(Restart, 2000)
     botStatus = '❌ Error'
   })
 
@@ -279,39 +276,7 @@ function createBot() {
     if (walkInterval) clearInterval(walkInterval)
     walkInterval = null
     isSleeping = false
-    setTimeout(bot_name, 2000)
     setTimeout(bot_2, 2000)
   })
 }
 createBot()
-
- function repo(){
-  Restart()
-  }
-
-function Restart(){
-    bot = mineflayer.createBot({
-    host: 'KARBAN2923-JmVS.aternos.me',
-    port: 51344,
-    username: `Emergency`
-    })
-    a=1;
-   bot.once('spawn', () => {
-   console.log(`connected ${new_op} as operator!`)
-   bot.chat(`/op bot_0`)
-   bot.chat(`/op Wanderot`)
-   console.log("Emergency operator join the game!")
-   setTimeout(() => {
-    console.log('waiting!');
-    }, 5000);
-   bot.quit('Done!')
-   })
-
-   bot.on('error', err => {
-    console.log('❌Restart Error')
-    setTimeout(repo, 3000)
-    botStatus = '❌ Error'
-  })
-  }
-
-
