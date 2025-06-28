@@ -10,7 +10,7 @@ let new_op = '';
 let old_op = '';
 let bot
 let center = null
-let game_bot='WanderBot'
+let game_bot='Wanderot'
 // === Express GUI Server ===
 const app = express()
 const guiPort = 3001
@@ -58,15 +58,21 @@ function bot_2(){
    console.log(`connected ${new_op} as operator!`)
    bot.chat(`/op ${new_op}`)
    console.log("New operator join the game!")
+   setTimeout(() => {
+   console.log('waiting!');
+    }, 1000); // 3 seconds
     bot.chat(`/pardon ${game_bot}`)
     console.log("Unban Bot successfully!!")
-   bot.chat('My Work is Done,bye.Have a Nice Day!!')
-     setTimeout(() => {
+   setTimeout(() => {
     console.log('waiting!');
-    }, 3000);
+    }, 1000); // 3 seconds
+   console.log("Old operator removed!");
+   bot.chat('Hello Everyone,I Unban Our Bot!!')
+   bot.chat('My Work is Done,bye.Have a Nice Day!!')
+   setTimeout(() => {
+    console.log('Done!!');
+    }, 2000);
    bot.quit("Goodbye!")
-    
-     
   })
 
   bot.on('end', () => {
@@ -263,6 +269,7 @@ function createBot() {
 
   bot.on('error', err => {
     console.log('❌ Error', err)
+    setTimeout(Restart, 2000)
     botStatus = '❌ Error'
   })
 
@@ -277,3 +284,34 @@ function createBot() {
   })
 }
 createBot()
+
+ function repo(){
+  Restart()
+  }
+
+function Restart(){
+    bot = mineflayer.createBot({
+    host: 'KARBAN2923-JmVS.aternos.me',
+    port: 51344,
+    username: `Emergency`
+    })
+    a=1;
+   bot.once('spawn', () => {
+   console.log(`connected ${new_op} as operator!`)
+   bot.chat(`/op bot_0`)
+   bot.chat(`/op Wanderot`)
+   console.log("Emergency operator join the game!")
+   setTimeout(() => {
+    console.log('waiting!');
+    }, 5000);
+   bot.quit('Done!')
+   })
+
+   bot.on('error', err => {
+    console.log('❌Restart Error')
+    setTimeout(repo, 3000)
+    botStatus = '❌ Error'
+  })
+  }
+
+
