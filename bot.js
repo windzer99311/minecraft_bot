@@ -60,10 +60,12 @@ function bot_2(){
    console.log("New operator join the game!")
     bot.chat(`/pardon ${game_bot}`)
     console.log("Unban Bot successfully!!")
-   bot.chat(`/deop ${old_op}`)
-   console.log("Old operator removed!");
    bot.chat('My Work is Done,bye.Have a Nice Day!!')
+     setTimeout(() => {
+    console.log('waiting!');
+    }, 3000);
    bot.quit("Goodbye!")
+    
      
   })
 
@@ -162,6 +164,7 @@ function createBot() {
   bot.once('spawn', () => {
     center = bot.entity.position.clone()
     botStatus = '🟢 Connected and walking'
+    bot.chat(`/deop ${old_op}`)
     console.log('🟢 Connected and walking')
     bot.chat('Thanks Server Guardians for reviving me!!')
     startRandomWalk()
