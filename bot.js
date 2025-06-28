@@ -57,7 +57,6 @@ function bot_2(){
   })
 
   bot.on('end', () => {
-  console.log(`former Operator ${old_op} left the game!`)
   createBot()
   })
   }
